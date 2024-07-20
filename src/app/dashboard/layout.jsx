@@ -4,6 +4,12 @@ import Sidebar from './_components/Sidebar'
 import '../globals.css'
 import "@uploadthing/react/styles.css";
 
+
+export const metadata = {
+  title: "Home Worker's Admin Dashboard",
+  description: "admin dashboard for home workers",
+};
+
 const layout = ({children}) => {
   return (
     <div className='w-full '>
