@@ -463,7 +463,7 @@ const Workers = () => {
                    </DrawerFooter>
                  </DrawerContent>
                </Drawer>
-                  <Button onClick={() => handleDelete(maid._id)} variant='destructive' className='p-2'>Close</Button>
+                  <Button onClick={() => handleDelete(maid._id)} variant='destructive' className='p-2'>Delete</Button>
                 </td>
               </tr>
             ))}
