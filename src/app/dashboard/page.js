@@ -13,7 +13,7 @@ const Dashboard = () => {
         <Blocks/>
         Categories
         </Link>
-        <Link href='/dashboard/maids' className='bg-white text-primary p-2 rounded-lg  flex items-center justify-evenly gap-2'>
+        <Link href='/dashboard/workers' className='bg-white text-primary p-2 rounded-lg  flex items-center justify-evenly gap-2'>
         <UsersRound />
           Workers 
         </Link>
