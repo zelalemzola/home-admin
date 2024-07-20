@@ -336,7 +336,7 @@ const Workers = () => {
         </div>
         <div className="z-0 w-full pt-[100px] px-10 py-2">
           <table className="min-w-full bg-white w-full border">
-            <thead className="bg-gray-800 text-white">
+            <thead className="bg-gray-800 text-white ">
               <tr className='border'>
                 <th className="py-3 px-4 uppercase font-semibold text-sm">Name</th>
                 <th className="py-3 px-4 uppercase font-semibold text-sm">Father&apos;s Name</th>
@@ -348,6 +348,7 @@ const Workers = () => {
                 <th className="py-3 px-4 uppercase font-semibold text-sm">Actions</th>
               </tr>
             </thead>
+            
             <tbody className='text-gray-700'>
               {filteredMaids.map((maid) => (
                 <tr key={maid._id} className='border-b '>
@@ -357,7 +358,7 @@ const Workers = () => {
                   <td className="py-3 px-4"><img src={maid.imageUrl} alt={maid.name} width={50} height={50} /></td>
                   <td className="py-3 px-4">{maid.price}</td>
                   <td className="py-3 px-4">{maid.category.name}</td>
-                  {maid.isAvailable ? <td className='py-3 px-4 bg-green-700 text-white text-center'>Yes</td>: <td className='py-3 px-4 bg-red-700 text-white text-center'>No</td>}
+                  {maid.isAvailable ? <td className='py-3 px-4  text-white text-center'><p className=' bg-green-700 px-2 mx-auto rounded-full'>Yes</p></td>: <td className='py-3 px-4  text-white text-center'><p className='px-2 bg-red-700 mx-auto rounded-full'>No</p></td>}
                  
                   <td className="py-3 px-4 flex items-center gap-2">
                     <Drawer>
