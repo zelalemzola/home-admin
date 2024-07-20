@@ -264,7 +264,7 @@ const Workers = () => {
         <Button type="button" onClick={() => handleAddField('review')}>Add Review</Button>
         </div>
         <div className="flex items-center gap-3">
-        <h2 className="text-lg font-bold text-primary">Select the Category of the Wokrer</h2>
+        <h2 className="text-lg font-bold text-primary">Select the Category of the Worker</h2>
         <select name="category" value={createFormState.category} onChange={(e) => handleChange(e)} required className=' p-2 rounded-full border border-black'>
           <option value="">Select Category</option>
           {categories.map((category) => (
