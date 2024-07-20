@@ -1,5 +1,6 @@
-import { connectdb } from "../../../../lib/config/db";
-import Maid from '../../../../lib/models/Maid';
+
+import { connectdb } from '@/lib/config/db';
+import Maid from '@/lib/models/Maid';
 import { NextResponse } from 'next/server';
 
 const LoadDB = async () => {

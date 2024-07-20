@@ -1,8 +1,11 @@
 
-import {connectdb} from "../../../../lib/config/db"
-import Category from '../../../../lib/models/Category';
+
+
 import { NextResponse } from 'next/server';
-import Business from '../../../../lib/models/Maid';
+
+import { connectdb } from '@/lib/config/db';
+import Category from '@/lib/models/Category';
+import Maid from '@/lib/models/Maid';
 const LoadDB = async () => {
   await connectdb();
 };
@@ -20,12 +23,12 @@ export async function DELETE(request) {
 
   try {
     // Delete all businesses with the given category ID
-    await Business.deleteMany({ category: id });
+    await Maid.deleteMany({ category: id });
 
     // Delete the category
     await Category.findByIdAndDelete(id);
 
-    return NextResponse.json({ msg: 'Category and associated businesses deleted' });
+    return NextResponse.json({ msg: 'Category and associated Workers deleted' });
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }

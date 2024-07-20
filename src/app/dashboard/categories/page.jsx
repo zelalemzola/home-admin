@@ -117,7 +117,7 @@ const Categories = () => {
     <AlertDialogHeader>
       <AlertDialogTitle className='flex items-center gap-2 justify-center'><TriangleAlert color='red' size={32}/>Are you absolutely sure?</AlertDialogTitle>
       <AlertDialogDescription >
-       This action cannot be undone. This will permanently delete the category and also the business billbaords created under it.
+       This action cannot be undone. This will permanently delete the category and also the Workers created under it.
       </AlertDialogDescription>
     </AlertDialogHeader>
     <AlertDialogFooter className='flex items-center justify-center'>
