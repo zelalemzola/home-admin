@@ -47,6 +47,11 @@ const MaidSchema = new mongoose.Schema({
   documentName:{
     type:String,
     required: false,
+  },
+  isAvailable: {
+    type: Boolean,
+    required: true,
+    default: true,
   }
 });
 

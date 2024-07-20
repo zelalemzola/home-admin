@@ -1,4 +1,3 @@
-
 import { connectdb } from '@/lib/config/db';
 import Maid from '@/lib/models/Maid';
 import { NextResponse } from 'next/server';
@@ -14,7 +13,7 @@ export async function GET(request) {
 }
 
 export async function POST(request) {
-  const { name, fathersName, grandFathersName, imageUrl, imageKey, price, experience, review, category, documentUrl, documentKey, documentName } = await request.json();
-  const maid = await Maid.create({ name, fathersName, grandFathersName, imageUrl, imageKey, price, experience, review, category, documentUrl, documentKey, documentName });
+  const { name, fathersName, grandFathersName, imageUrl, imageKey, price, experience, review, category, documentUrl, documentKey, documentName, isAvailable } = await request.json();
+  const maid = await Maid.create({ name, fathersName, grandFathersName, imageUrl, imageKey, price, experience, review, category, documentUrl, documentKey, documentName, isAvailable });
   return NextResponse.json({ maid });
 }
