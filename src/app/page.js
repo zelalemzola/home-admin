@@ -1,47 +1,19 @@
-"use client"
 
-import { UploadButton } from "@uploadthing/react";
-import Image from "next/image";
-import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+
+
 
 export default function Home() {
-  const [pdfData,setPdfData]=useState('');
+ 
   return (
-    <div className="gap-2">
-  <div className="flex items-center justify-between">
-    <label className="text-sm font-bold text-gray-500 tracking-wide">
-      Attach Document
-    </label>
-    {pdfData && (
-      <button
-        type="button"
-        onClick={() => setPdfData("")}
-        className="py-1 px-3 focus:outline-none hover:bg-gray-200 bg-black text-white"
-      >
-        + edit pdf
-      </button>
-    )}
-  </div>
-  {pdfData ? (
-    <a
-      target="_blank"
-      href={pdfData?.[0]?.url}
-      className="col-span-6 sm:col-span-4 text-red-400 underline"
-    >
-      {pdfData?.[0]?.name}
-    </a>
-  ) : (
-    <>
-      <UploadButton
-        endpoint={"productPdf"}
-        onClientUploadComplete={(url) => {
-          console.log("files", url);
-          setPdfData(url);
-          window.alert("Upload completed");
-        }}
-      />
-    </>
-  )}
-</div>
+<div className='bg-primary w-full h-full '>
+      <div className='flex flex-col items-center justify-center gap-10 pt-40 px-[20px] pb-[270px] '>
+      <h1 className='text-primary text-4xl text-white'>Welcome, Dear Admin Click the button below to go to the Dashbaord</h1>
+      <div className='pt-6'>
+         <Button className='bg-white hover:bg-white'><Link href="/dashboard" className="text-primary rounded-lg">Go To Dashboard</Link></Button>
+      </div>
+      </div>
+    </div>
   );
 }
