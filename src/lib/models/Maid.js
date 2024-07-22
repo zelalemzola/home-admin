@@ -17,8 +17,8 @@ const MaidSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  imageKey:{
-    type:String,
+  imageKey: {
+    type: String,
     required: true,
   },
   price: {
@@ -36,23 +36,25 @@ const MaidSchema = new mongoose.Schema({
     ref: 'Category',
     required: true,
   },
-  documentUrl:{
-    type:String,
+  documentUrl: {
+    type: String,
     required: false,
   },
-  documentKey:{
-    type:String,
+  documentKey: {
+    type: String,
     required: false,
   },
-  documentName:{
-    type:String,
+  documentName: {
+    type: String,
     required: false,
   },
   isAvailable: {
     type: Boolean,
-    required: true,
     default: true,
-  }
+  },
+  languages: [{
+    type: String,
+  }]
 });
 
 export default mongoose.models.Maid || mongoose.model('Maid', MaidSchema);

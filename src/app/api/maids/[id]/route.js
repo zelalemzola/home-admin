@@ -8,11 +8,11 @@ const LoadDB = async () => {
 LoadDB();
 
 export async function PUT(request) {
-  const { name, fathersName, grandFathersName, imageUrl, imageKey, price, experience, review, category, documentUrl, documentKey, documentName, isAvailable } = await request.json();
+  const { name, fathersName, grandFathersName, imageUrl, imageKey, price, experience, review, category, documentUrl, documentKey, documentName, isAvailable, languages } = await request.json();
   const id = request.nextUrl.pathname.split('/').pop();
   const maid = await Maid.findByIdAndUpdate(
     id, 
-    { name, fathersName, grandFathersName, imageUrl, imageKey, price, experience, review, category, documentUrl, documentKey, documentName, isAvailable },
+    { name, fathersName, grandFathersName, imageUrl, imageKey, price, experience, review, category, documentUrl, documentKey, documentName, isAvailable, languages },
     { new: true, runValidators: true }
   );
   return NextResponse.json({ maid });

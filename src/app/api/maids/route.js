@@ -13,7 +13,7 @@ export async function GET(request) {
 }
 
 export async function POST(request) {
-  const { name, fathersName, grandFathersName, imageUrl, imageKey, price, experience, review, category, documentUrl, documentKey, documentName, isAvailable } = await request.json();
-  const maid = await Maid.create({ name, fathersName, grandFathersName, imageUrl, imageKey, price, experience, review, category, documentUrl, documentKey, documentName, isAvailable });
+  const { name, fathersName, grandFathersName, imageUrl, imageKey, price, experience, review, category, documentUrl, documentKey, documentName, isAvailable, languages } = await request.json();
+  const maid = await Maid.create({ name, fathersName, grandFathersName, imageUrl, imageKey, price, experience, review, category, documentUrl, documentKey, documentName, isAvailable, languages });
   return NextResponse.json({ maid });
 }

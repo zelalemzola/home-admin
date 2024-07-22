@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
@@ -9,7 +9,6 @@ import { Button } from '@/components/ui/button';
 import { PlusCircle, Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Select } from '@/components/ui/select';
 import Link from 'next/link';
 
 const Workers = () => {
@@ -28,7 +27,8 @@ const Workers = () => {
     documentUrl: '',
     documentKey: '',
     documentName: '',
-    isAvailable: true
+    isAvailable: true,
+    languages: ['']
   });
   const [updateFormState, setUpdateFormState] = useState({
     id: '',
@@ -44,7 +44,8 @@ const Workers = () => {
     documentUrl: '',
     documentKey: '',
     documentName: '',
-    isAvailable: true
+    isAvailable: true,
+    languages: ['']
   });
   const [errors, setErrors] = useState([]);
   const [showUpdateForm, setShowUpdateForm] = useState(false);
@@ -78,6 +79,7 @@ const Workers = () => {
     if (formState.experience.some(exp => !exp)) newErrors.push('All experience fields must be filled');
     if (formState.review.some(rev => !rev)) newErrors.push('All review fields must be filled');
     if (!formState.category) newErrors.push('Category is required');
+    if (formState.languages.some(lang => !lang)) newErrors.push('All language fields must be filled');
     return newErrors;
   };
 
@@ -91,12 +93,12 @@ const Workers = () => {
       return;
     }
 
-    const { id, name, fathersName, grandFathersName, imageUrl, imageKey, price, experience, review, category, documentUrl, documentKey, documentName, isAvailable } = formState;
+    const { id, name, fathersName, grandFathersName, imageUrl, imageKey, price, experience, review, category, documentUrl, documentKey, documentName, isAvailable, languages } = formState;
 
     if (isUpdate) {
-      await axios.put(`/api/maids/${id}`, { name, fathersName, grandFathersName, imageUrl, imageKey, price, experience, review, category, documentUrl, documentKey, documentName, isAvailable });
+      await axios.put(`/api/maids/${id}`, { name, fathersName, grandFathersName, imageUrl, imageKey, price, experience, review, category, documentUrl, documentKey, documentName, isAvailable, languages });
     } else {
-      await axios.post('/api/maids', { name, fathersName, grandFathersName, imageUrl, imageKey, price, experience, review, category, documentUrl, documentKey, documentName, isAvailable });
+      await axios.post('/api/maids', { name, fathersName, grandFathersName, imageUrl, imageKey, price, experience, review, category, documentUrl, documentKey, documentName, isAvailable, languages });
     }
 
     setCreateFormState({
@@ -112,7 +114,8 @@ const Workers = () => {
       documentUrl: '',
       documentKey: '',
       documentName: '',
-      isAvailable: true
+      isAvailable: true,
+      languages: ['']
     });
 
     setUpdateFormState({
@@ -129,7 +132,8 @@ const Workers = () => {
       documentUrl: '',
       documentKey: '',
       documentName: '',
-      isAvailable: true
+      isAvailable: true,
+      languages: ['']
     });
 
     setErrors([]);
@@ -152,7 +156,8 @@ const Workers = () => {
       documentUrl: maid.documentUrl,
       documentKey: maid.documentKey,
       documentName: maid.documentName,
-      isAvailable: maid.isAvailable
+      isAvailable: maid.isAvailable,
+      languages: maid.languages
     });
     setShowUpdateForm(true);
   };
@@ -169,7 +174,7 @@ const Workers = () => {
 
     if (type === 'checkbox') {
       setFormState({ ...formState, [name]: checked });
-    } else if (name.startsWith('experience') || name.startsWith('review')) {
+    } else if (name.startsWith('experience') || name.startsWith('review') || name.startsWith('languages')) {
       const index = parseInt(name.split('-')[1]);
       const updatedArray = [...formState[name.split('-')[0]]];
       updatedArray[index] = value;
@@ -201,7 +206,7 @@ const Workers = () => {
 
   return (
     <div className=''>
-        <div className="fixed z-30 w-full px-4 py-3 border-b shadow-md flex items-center gap-20">
+        <div className="fixed bg-white z-30 w-full px-4 py-3 border-b shadow-md flex items-center gap-20">
         <Drawer>
           <DrawerTrigger>
             <div className='flex items-center justify-between gap-10 rounded-sm p-2 bg-primary'>
@@ -246,14 +251,14 @@ const Workers = () => {
                       {createFormState.imageUrl && <Image src={createFormState.imageUrl} className='p-3' width={120} height={150} alt="" />}
                     </div>
                     <div className="flex items-center gap-2">
-                      <h2 className='text-lg font-bold text-primary'>Wage per Month</h2>       
-                      <Input name="price" type="number" value={createFormState.price} onChange={(e) => handleChange(e)} placeholder="Wage per Month" required  className='w-1/4'/>
+                      <h2 className='text-lg font-bold text-primary'>Wage per Month</h2>
+                      <Input name="price" type="number" value={createFormState.price} onChange={(e) => handleChange(e)} placeholder="Wage per Month" required className='w-1/4' />
                     </div>
                     <div className="flex flex-col gap-3">
                       <h2 className='text-lg font-bold text-primary'>Enter workers previous experience</h2>
                       {createFormState.experience.map((exp, index) => (
                         <div key={index} className='flex items-center gap-3'>
-                          <Input name={`experience-${index}`} value={exp} onChange={(e) => handleChange(e)} placeholder="3+ Years at a French Restaurant" className='w-1/3'/>
+                          <Input name={`experience-${index}`} value={exp} onChange={(e) => handleChange(e)} placeholder="3+ Years at a french Restaurant" className='w-1/3' />
                           <Button type="button" onClick={() => handleRemoveField('experience', index)}>Remove</Button>
                         </div>
                       ))}
@@ -263,7 +268,7 @@ const Workers = () => {
                       <h2 className="text-lg font-bold text-primary">Give the Worker a starter Company Review</h2>
                       {createFormState.review.map((rev, index) => (
                         <div key={index} className='flex items-center gap-3'>
-                          <Input name={`review-${index}`} value={rev} onChange={(e) => handleChange(e)} placeholder="Review" className='w-1/3'/>
+                          <Input name={`review-${index}`} value={rev} onChange={(e) => handleChange(e)} placeholder="Review" className='w-1/3' />
                           <Button type="button" onClick={() => handleRemoveField('review', index)}>Remove</Button>
                         </div>
                       ))}
@@ -271,7 +276,7 @@ const Workers = () => {
                     </div>
                     <div className="flex items-center gap-3">
                       <h2 className="text-lg font-bold text-primary">Select the Category of the Worker</h2>
-                      <select name="category" value={createFormState.category} onChange={(e) => handleChange(e)} required className='p-2 rounded-full border border-black'>
+                      <select name="category" value={createFormState.category} onChange={(e) => handleChange(e)} required className=' p-2 rounded-full border border-black'>
                         <option value="">Select Category</option>
                         {categories.map((category) => (
                           <option key={category._id} value={category._id}>{category.name}</option>
@@ -286,7 +291,7 @@ const Workers = () => {
                         </Link>
                       ) : (
                         <UploadButton
-                          className="flex-start w-fit"
+                          className="flex-start  w-fit"
                           endpoint={"productPdf"}
                           onClientUploadComplete={(url) => {
                             console.log("files", url);
@@ -302,65 +307,70 @@ const Workers = () => {
                       )}
                     </div>
                     <div className="flex items-center gap-3">
-                      <h2 className='text-lg font-bold text-primary'>Availability</h2>
+                      <h2 className='text-lg font-bold text-primary'>Is Available?</h2>
                       <input
                         type="checkbox"
                         name="isAvailable"
                         checked={createFormState.isAvailable}
                         onChange={(e) => handleChange(e)}
-                        className="w-4 h-4"
                       />
                     </div>
+                    <div className="flex flex-col gap-3">
+                      <h2 className="text-lg font-bold text-primary">Languages</h2>
+                      {createFormState.languages.map((lang, index) => (
+                        <div key={index} className='flex items-center gap-3'>
+                          <Input name={`languages-${index}`} value={lang} onChange={(e) => handleChange(e)} placeholder="Language" className='w-1/3' />
+                          <Button type="button" onClick={() => handleRemoveField('languages', index)}>Remove</Button>
+                        </div>
+                      ))}
+                      <Button type="button" onClick={() => handleAddField('languages')}>Add Language</Button>
+                    </div>
                   </div>
-                </ScrollArea> 
+                </ScrollArea>
                 <Button type="submit" className='w-1/3 bg-green-500 hover:bg-green-600'>Add Maid</Button>
               </div>
             </form>
             <DrawerFooter>
               <DrawerClose>
-                <Button variant="destructive">Close</Button>
+                <Button variant="destructive" >Close</Button>
               </DrawerClose>
             </DrawerFooter>
           </DrawerContent>
         </Drawer>
         <div className="flex items-center gap-2 p-2 border border-primary rounded-full w-[40%]">
-          <Search/>
+          <Search />
           <input
             type="text"
             placeholder="Search Workers..."
             value={searchQuery}
             onChange={handleSearch}
-            className="border-none outline-none w-full"
+            className=" border-none outline-none w-full"
           />
         </div>
         </div>
         <div className="z-0 w-full pt-[100px] px-10 py-2">
           <table className="min-w-full bg-white w-full border">
-            <thead className="bg-gray-800 text-white ">
+            <thead className="bg-gray-800 text-white">
               <tr className='border'>
-                <th className="py-3 px-4 uppercase font-semibold text-sm">Name</th>
-                <th className="py-3 px-4 uppercase font-semibold text-sm">Father&apos;s Name</th>
-                <th className="py-3 px-4 uppercase font-semibold text-sm">Grandfather&apos;s Name</th>
-                <th className="py-3 px-4 uppercase font-semibold text-sm">Image</th>
-                <th className="py-3 px-4 uppercase font-semibold text-sm">Price</th>
-                <th className="py-3 px-4 uppercase font-semibold text-sm">Category</th>
-                <th className="py-3 px-4 uppercase font-semibold text-sm">Available</th>
-                <th className="py-3 px-4 uppercase font-semibold text-sm">Actions</th>
+                <th className=" py-3 px-4 uppercase font-semibold text-sm">Name</th>
+                <th className=" py-3 px-4 uppercase font-semibold text-sm">Father&apos;s Name</th>
+                <th className=" py-3 px-4 uppercase font-semibold text-sm">Grandfather&apos;s Name</th>
+                <th className=" py-3 px-4 uppercase font-semibold text-sm">Image</th>
+                <th className=" py-3 px-4 uppercase font-semibold text-sm">Price</th>
+                <th className=" py-3 px-4 uppercase font-semibold text-sm">Category</th>
+                <th className=" py-3 px-4 uppercase font-semibold text-sm">Actions</th>
               </tr>
             </thead>
-            
             <tbody className='text-gray-700'>
               {filteredMaids.map((maid) => (
                 <tr key={maid._id} className='border-b '>
-                  <td className="py-3 px-4">{maid.name}</td>
-                  <td className="py-3 px-4">{maid.fathersName}</td>
-                  <td className="py-3 px-4">{maid.grandFathersName}</td>
-                  <td className="py-3 px-4"><img src={maid.imageUrl} alt={maid.name} width={50} height={50} /></td>
-                  <td className="py-3 px-4">{maid.price}</td>
-                  <td className="py-3 px-4">{maid.category.name}</td>
-                  {maid.isAvailable ? <td className='py-3 px-4  text-white text-center'><p className=' bg-green-700 px-2 mx-auto rounded-full'>Yes</p></td>: <td className='py-3 px-4  text-white text-center'><p className='px-2 bg-red-700 mx-auto rounded-full'>No</p></td>}
-                 
-                  <td className="py-3 px-4 flex items-center gap-2">
+                  <td className=" py-3 px-4">{maid.name}</td>
+                  <td className=" py-3 px-4">{maid.fathersName}</td>
+                  <td className=" py-3 px-4">{maid.grandFathersName}</td>
+                  <td className=" py-3 px-4"><img src={maid.imageUrl} alt={maid.name} width={50} height={50} /></td>
+                  <td className=" py-3 px-4">{maid.price}</td>
+                  <td className=" py-3 px-4">{maid.category.name}</td>
+                  <td className=" py-3 px-4 flex items-center gap-2" >
                     <Drawer>
                       <DrawerTrigger>
                         <Button onClick={() => handleEdit(maid)} className='bg-green-500 hover:bg-green-500 text-white p-2 px-4'>Edit</Button>
@@ -461,18 +471,27 @@ const Workers = () => {
                                   </div>
                                 </div>
                                 <div className="flex items-center gap-3">
-                                  <h2 className='text-lg font-bold text-primary'>Availability</h2>
+                                  <h2 className='text-lg font-bold text-primary'>Is Available?</h2>
                                   <input
                                     type="checkbox"
                                     name="isAvailable"
                                     checked={updateFormState.isAvailable}
                                     onChange={(e) => handleChange(e, true)}
-                                    className="w-4 h-4"
                                   />
+                                </div>
+                                <div className="flex flex-col gap-3">
+                                  <h2 className="text-lg font-bold text-primary">Languages</h2>
+                                  {updateFormState.languages.map((lang, index) => (
+                                    <div key={index} className='flex items-center gap-3'>
+                                      <Input name={`languages-${index}`} value={lang} onChange={(e) => handleChange(e, true)} placeholder="Language" className='w-1/3' />
+                                      <Button type="button" onClick={() => handleRemoveField('languages', index, true)}>Remove</Button>
+                                    </div>
+                                  ))}
+                                  <Button type="button" onClick={() => handleAddField('languages', true)}>Add Language</Button>
                                 </div>
                               </div>
                             </ScrollArea>
-                            <Button type="submit" className='bg-cyan-800 w-[20%]'>Update Maid</Button>
+                            <Button type="submit" className='bg-cyan-800 w-[20%]' >Update Maid</Button>
                           </div>
                         </form>
                         <DrawerFooter>
