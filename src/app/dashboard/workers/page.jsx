@@ -358,6 +358,7 @@ const Workers = () => {
                 <th className=" py-3 px-4 uppercase font-semibold text-sm">Image</th>
                 <th className=" py-3 px-4 uppercase font-semibold text-sm">Price</th>
                 <th className=" py-3 px-4 uppercase font-semibold text-sm">Category</th>
+                <th className=" py-3 px-4 uppercase font-semibold text-sm">Availablity</th>
                 <th className=" py-3 px-4 uppercase font-semibold text-sm">Actions</th>
               </tr>
             </thead>
@@ -370,6 +371,11 @@ const Workers = () => {
                   <td className=" py-3 px-4"><img src={maid.imageUrl} alt={maid.name} width={50} height={50} /></td>
                   <td className=" py-3 px-4">{maid.price}</td>
                   <td className=" py-3 px-4">{maid.category.name}</td>
+                 {maid.isAvailable?
+                 <td className=" py-3 px-4"><p className='rounded-full bg-green-800 text-white text-center p-1'>Yes</p></td>
+                 :
+                 <td className=" py-3 px-4"><p className='rounded-full bg-red-600 text-white text-center p-1'>No</p></td>
+                 }
                   <td className=" py-3 px-4 flex items-center gap-2" >
                     <Drawer>
                       <DrawerTrigger>
